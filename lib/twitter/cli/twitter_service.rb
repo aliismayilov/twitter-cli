@@ -18,7 +18,14 @@ module Twitter
       end
 
       def get_access_token
-        response = self.class.post('/oauth2/token', grant_type: 'client_credentials', headers: {'Authorization' => "Basic #{base64_credentials}"})
+        response = self.class.post('/oauth2/token', {
+          body: {
+            grant_type: 'client_credentials'
+          },
+          headers: {
+            'Authorization' => "Basic #{base64_credentials}"
+          }
+        })
         JSON.parse(response.body)['access_token']
       end
     end
