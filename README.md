@@ -1,6 +1,11 @@
-# Twitter::Cli
+Twitter CLI
+============
 
-TODO: Write a gem description
+CLI to access Twitter API.
+
+## Usage
+
+To use the executable you'll need a consumer key and secret. You can get them from [apps.twitter.com](https://apps.twitter.com/).
 
 ## Installation
 
@@ -17,10 +22,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install twitter-cli
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Contributing
 
