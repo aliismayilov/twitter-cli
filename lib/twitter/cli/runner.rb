@@ -7,7 +7,16 @@ module Twitter
         say 'We are getting the access token...'
         @twitter_service = Twitter::Cli::TwitterService.new(consumer_key, consumer_secret)
         while (@twitter_service.access_token)
-          find_mentions
+          say 'Which feature would you like to use:'
+          say '1. Find mentions of the user'
+          say '2. Exit the program'
+          choice = ask 'Please write the number of the choice:', limited_to: %w(1 2)
+          if choice == '1'
+            find_mentions
+          elsif choice == '2'
+            say 'Bye...'
+            break
+          end
         end
         say 'We could not get an access token with the provided consumer key and secret' unless @twitter_service.access_token
       end
@@ -31,8 +40,10 @@ module Twitter
       end
 
       def find_mentions
-        username = ask('Search for the latest 3 user mentions. Please enter any username (without @):')
-        return if username.empty?
+        username = ''
+        while username.empty?
+          username = ask('Search for the latest 3 user mentions. Please enter any username (without @):')
+        end
         say '====='
         statuses = @twitter_service.mentions(username)
         if statuses.any?
