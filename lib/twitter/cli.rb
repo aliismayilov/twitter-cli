@@ -1,4 +1,7 @@
+require "httparty"
+
 require "twitter/cli/version"
+require "twitter/cli/twitter_service"
 
 module Twitter
   module Cli
