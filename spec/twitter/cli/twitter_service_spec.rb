@@ -8,10 +8,17 @@ describe Twitter::Cli::TwitterService do
   end
 
   describe 'getting access token' do
-    subject(:twitter_service) { Twitter::Cli::TwitterService.new('xvz1evFS4wEEPTGEFPHBog', 'L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg') }
+    let(:twitter_service) { Twitter::Cli::TwitterService.new('xvz1evFS4wEEPTGEFPHBog', 'L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg') }
 
     it 'encodes consumer key and secret in base64 format' do
       expect(twitter_service.base64_credentials).to eql 'eHZ6MWV2RlM0d0VFUFRHRUZQSEJvZzpMOHFxOVBaeVJnNmllS0dFS2hab2xHQzB2SldMdzhpRUo4OERSZHlPZw=='
+    end
+
+    it 'posts consumer credentials to get the access_token' do
+      allow(Twitter::Cli::TwitterService).to receive(:post) do
+        double('response', body: '{"token_type":"bearer","access_token":"AAAA%2FAAA%3DAAAAAAAA"}')
+      end
+      expect(twitter_service.access_token).to eql 'AAAA%2FAAA%3DAAAAAAAA'
     end
   end
 end
