@@ -6,7 +6,21 @@ module Twitter
         say 'For this you will need to obtain consumer key and secret from https://apps.twitter.com/'
         consumer_key    = ask('Please input your consumer key:')
         consumer_secret = ask('Please input your secret:')
-        say Twitter::Cli::TwitterService.new(consumer_key, consumer_secret).access_token
+        say 'We are getting the access token...'
+        twitter_service = Twitter::Cli::TwitterService.new(consumer_key, consumer_secret)
+        while (twitter_service.access_token)
+          username = ask('Search for the latest 3 user mentions. Please enter any username (without @):')
+          say '====='
+          statuses = twitter_service.mentions(username)
+          if statuses.any?
+            statuses.each do |status|
+              say "@#{status[:username]} said:  "
+              say "#{status[:text]}"
+            end
+          else
+            say 'No mentions of this user'
+          end
+        end
       end
     end
   end
