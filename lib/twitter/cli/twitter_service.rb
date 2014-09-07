@@ -28,6 +28,21 @@ module Twitter
         })
         JSON.parse(response.body)['access_token']
       end
+
+      def mentions(username, count=3)
+        response = self.class.get('/1.1/search/tweets.json',
+          q: "@#{username}",
+          count: count,
+          headers: {
+            'Authorization' => "Bearer #{@access_token}"
+          }
+        )
+        JSON.parse(response.body)['statuses'].map do |status|
+          {
+            status['user']['screen_name'] => status['text']
+          }
+        end
+      end
     end
   end
 end

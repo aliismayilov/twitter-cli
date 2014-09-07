@@ -21,4 +21,29 @@ describe Twitter::Cli::TwitterService do
       expect(twitter_service.access_token).to eql 'AAAA%2FAAA%3DAAAAAAAA'
     end
   end
+
+  describe '#mentions' do
+    let(:twitter_service) { Twitter::Cli::TwitterService.new('consumer_key', 'consumer_secret') }
+    let(:mentions_search_json_file) { File.join(spec_path, 'fixtures', 'mentions', 'search.json') }
+
+    before do
+      allow(Twitter::Cli::TwitterService).to receive(:post) do
+        double('response', body: '{"token_type":"bearer","access_token":"AAAA%2FAAA%3DAAAAAAAA"}')
+      end
+
+      allow(Twitter::Cli::TwitterService).to receive(:get) do
+        double('response', body: File.read(mentions_search_json_file))
+      end
+    end
+
+    it 'gets last 3 tweets where the specified user is mentioned' do
+      expect(twitter_service.mentions('qaralama')).to have(3).tweets
+    end
+
+    it 'maps statuses as username => status hashes' do
+      expect(twitter_service.mentions('qaralama').first).to eql({
+        'Familm' => "Skill Mash website is going to be online soon. Thanks for your hard work @qaralama\nCountdow starts...:)"
+      })
+    end
+  end
 end
