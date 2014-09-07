@@ -42,10 +42,8 @@ module Twitter
         )
         JSON.parse(response.body)['statuses'].map do |status|
           {
-            status: {
-              username: status['user']['screen_name'],
-              text: status['text'].gsub("\n", '')
-            }
+            username: status['user']['screen_name'],
+            text: status['text'].gsub("\n", '')
           }
         end
       end

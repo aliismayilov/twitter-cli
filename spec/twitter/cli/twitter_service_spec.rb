@@ -40,12 +40,10 @@ describe Twitter::Cli::TwitterService do
       expect(twitter_service.mentions('qaralama')).to have(3).tweets
     end
 
-    it 'maps statuses as status[:username, :text] hashes' do
+    it 'maps statuses as {:username, :text} hashes' do
       expect(twitter_service.mentions('qaralama').first).to eql({
-        status: {
-          username: 'Familm',
-          text: 'Skill Mash website is going to be online soon. Thanks for your hard work @qaralamaCountdow starts...:)'
-        }
+        username: 'Familm',
+        text: 'Skill Mash website is going to be online soon. Thanks for your hard work @qaralamaCountdow starts...:)'
       })
     end
   end

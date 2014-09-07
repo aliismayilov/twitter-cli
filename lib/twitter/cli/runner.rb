@@ -10,6 +10,7 @@ module Twitter
         twitter_service = Twitter::Cli::TwitterService.new(consumer_key, consumer_secret)
         while (twitter_service.access_token)
           username = ask('Search for the latest 3 user mentions. Please enter any username (without @):')
+          next if username.empty?
           say '====='
           statuses = twitter_service.mentions(username)
           if statuses.any?
@@ -18,9 +19,10 @@ module Twitter
               say "#{status[:text]}"
             end
           else
-            say 'No mentions of this user'
+            say "No mentions of @#{username}"
           end
         end
+        say 'We could not get an access token with the provided consumer key and secret' unless twitter_service.access_token
       end
     end
   end
