@@ -1,8 +1,6 @@
 module Twitter
   module Cli
     class Runner < Thor
-      included Thor::Shell::Basic
-
       desc 'start', 'Runs the gem through workflow'
       def start
         greet
