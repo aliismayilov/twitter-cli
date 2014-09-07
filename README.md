@@ -7,6 +7,11 @@ CLI to access Twitter API.
 
 To use the executable you'll need a consumer key and secret. You can get them from [apps.twitter.com](https://apps.twitter.com/).
 
+Run from the repository:
+```sh
+$ ./bin/twitter-cli
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
