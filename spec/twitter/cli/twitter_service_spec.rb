@@ -7,7 +7,7 @@ describe Twitter::Cli::TwitterService do
     its(:format)   { is_expected.to eql :json }
   end
 
-  describe 'getting access token' do
+  describe 'getting access token', :vcr do
     let(:twitter_service) { Twitter::Cli::TwitterService.new('xvz1evFS4wEEPTGEFPHBog', 'L8qq9PZyRg6ieKGEKhZolGC0vJWLw8iEJ88DRdyOg') }
 
     it 'encodes consumer key and secret in base64 format' do
